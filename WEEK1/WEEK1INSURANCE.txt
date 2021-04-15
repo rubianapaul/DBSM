@@ -1,0 +1,69 @@
+
+BEGIN TRANSACTION;
+
+CREATE TABLE PERSON (DRIVER_ID VARCHAR(10),NAME VARCHAR(20),ADDRESS VARCHAR(30),PRIMARY Key(DRIVER_ID));
+
+ 
+INSERT INTO PERSON VALUES('A01','RICHARD','SRINIVAS NAGAR');
+INSERT INTO PERSON VALUES('A02','PRADEEP','RAJAJINAGAR');
+INSERT INTO PERSON VALUES('A03','PRIYA','INDIRANAGAR');
+INSERT INTO PERSON VALUES('A04','JOHN','CHURCH STREET');
+INSERT INTO PERSON VALUES('A05','RUBIANA','BASAVANGUDI');
+COMMIT;
+SELECT * FROM PERSON;
+
+BEGIN TRANSACTION;
+
+CREATE TABLE CAR(REG_NUM VARCHAR(10),MODEL
+VARCHAR(10),YEAR INT,PRIMARY KEY(REG_NUM));
+
+INSERT INTO CAR VALUES('KA031181','LANCER', 1957);
+INSERT INTO CAR VALUES('KA031182','POLO', 1989);
+INSERT INTO CAR VALUES('KA031183','HELLCAT',2001);
+INSERT INTO CAR VALUES('KA031184','CHARGER',2010);
+INSERT INTO CAR VALUES('KA031185','SUNNY',2015);
+
+
+COMMIT;
+SELECT * FROM CAR;
+
+BEGIN TRANSACTION;
+
+create table accident(report_num int,accident_date
+date,location varchar(20),primary key(report_num));
+
+ insert into accident values(111,'01-JAN-03','Mysore Road');
+ insert into accident values(112,'01-JAN-04','Hosur Road');
+ insert into accident values(113,'02-FEB-03','St.Marks Road');
+ insert into accident values(117,'12-MARCH-04','Yellow Brick Road');
+ insert into accident values(118,'01-JUNE-03','HOTEL Road');
+      
+COMMIT;
+SELECT * FROM ACCIDENT;
+
+BEGIN TRANSACTION;
+
+create table owns(driver_id varchar(10),reg_num
+varchar(10),
+primary key(driver_id,reg_num),foreign key(driver_id) references person(driver_id),foreign key(reg_num) references car(reg_num));
+ insert into owns values('A01','KA052250');
+ insert into owns values('A02','KA052350');
+ insert into owns values('A03','KA052251');
+ insert into owns values('A04','KA052245');
+ insert into owns values('A67','KA052250');
+     COMMIT;
+     SELECT * FROM OWNS;
+     
+BEGIN TRANSACTION;
+
+create table participated(driver_id
+varchar(10), reg_num varchar(10),report_num int, damage_amount int,primary key(driver_id,reg_num,report_num),foreign key(driver_id) references person(driver_id),foreign key(reg_num) references car(reg_num),foreign key(report_num) references accident(report_num));
+
+insert into participated values('A01','KA052250',11,10000);
+insert into participated values('A02','KA052251',12,10000);
+insert into participated values('A03','KA052250',11,40000);
+insert into participated values('A04','KA052251',11,10000);
+insert into participated values('A04','KA052245',11,14000);
+
+COMMIT;
+SELECT * FROM PARTICIPATED;
